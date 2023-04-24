@@ -57,7 +57,7 @@ void insertionSort(std::vector<int>& array, size_t left, size_t right) {
 
 size_t select_partition(std::vector<int>& array, size_t left, size_t right, int pivot) {
     size_t pivot_index;
-    for(pivot_index = left; pivot_index < right; pivot_index++) {
+    for(pivot_index = left; pivot_index <= right; pivot_index++) {
         if(equal(array[pivot_index], pivot)) {
             break;
         }

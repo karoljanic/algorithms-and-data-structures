@@ -3,7 +3,7 @@
 #include <vector>
 #include <chrono>
 
-#define EXTENSIVE_OUTPUT
+#undef EXTENSIVE_OUTPUT
 
 unsigned long comparisonsCounter = 0;
 unsigned long swapsCounter = 0;
@@ -119,11 +119,12 @@ int main(int argc, char** argv) {
 
     std::cout << "is sorted: " << isSorted(array) << '\n' <<
         "cmps: " << comparisonsCounter << '\n' <<
-        "swps: " << swapsCounter << '\n';
+        "swps: " << swapsCounter << '\n' <<
+        "time: " << elapsed_seconds.count() * 1000 << '\n';
 
 #else
 
-    std::cout << isSorted(array) << '\n' << comparisonsCounter << '\n' << swapsCounter << '\n';
+    std::cout << isSorted(array) << '\n' << comparisonsCounter << '\n' << swapsCounter << '\n' << elapsed_seconds.count() * 1000 << '\n';
     
 #endif  // EXTENSIVE_OUTPUT
         

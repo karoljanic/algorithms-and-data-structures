@@ -2,8 +2,9 @@
 #include <iomanip>
 #include <vector>
 #include <chrono>
+#include <algorithm>
 
-#define EXTENSIVE_OUTPUT
+#undef EXTENSIVE_OUTPUT
 
 unsigned long comparisonsCounter = 0;
 unsigned long swapsCounter = 0;
@@ -83,9 +84,8 @@ size_t select_partition(std::vector<int>& array, size_t left, size_t right, int 
     return i + 1;
 }
 
-int select(std::vector<int> array, size_t k, size_t m, size_t left, size_t right) {
+int select(std::vector<int>& array, size_t k, size_t m, size_t left, size_t right) {
     size_t n = right - left + 1;
-        
 
     if(n + 1 <= m) {
         insertionSort(array, left, right);
@@ -149,19 +149,11 @@ void quickSort(std::vector<int>& array, size_t left, size_t right, int m) {
         return;
     }
 
-    int median = select(array, (right - left + 1) / 2, 5, left, right);
-
+    std::vector<int> array_copy = std::vector<int>(array.begin() + left, array.begin() + right + 1);
+    int median = select(array_copy, (right - left + 1) / 2, 5, 0, array_copy.size() - 1);
     
-    //size_t p = quickSortPartition(array, left, right, array[(left + right)/2]);
-    size_t p = quickSortPartition(array, left, right, array[left]);
-
-    //std::cout << "partition na " << left << ", " << right << " z pivotem " << median << "  p = " << p << std::endl;
-
-    //std::cout << "median of: ";
-    //for(const int& el: medians) { std::cout << el << " "; }
-    //std::cout << " is " << median << std::endl;
-    //std::cout << "left= " << left << "  right= " << right << "  p= " << p << "  median= " << median << std::endl;
-
+    size_t p = quickSortPartition(array, left, right, median);
+    
 #ifdef EXTENSIVE_OUTPUT
 
     for(const int& element : array) {
@@ -225,11 +217,12 @@ int main(int argc, char** argv) {
 
     std::cout << "is sorted: " << isSorted(array) << '\n' <<
         "cmps: " << comparisonsCounter << '\n' <<
-        "swps: " << swapsCounter << '\n';
+        "swps: " << swapsCounter << '\n' <<
+        "time: " << elapsed_seconds.count() * 1000 << '\n';
 
 #else
 
-    std::cout << isSorted(array) << '\n' << comparisonsCounter << '\n' << swapsCounter << '\n';
+    std::cout << isSorted(array) << '\n' << comparisonsCounter << '\n' << swapsCounter << '\n' << elapsed_seconds.count() * 1000 << '\n';
     
 #endif  // EXTENSIVE_OUTPUT
         

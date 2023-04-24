@@ -10,16 +10,22 @@
 unsigned long comparisonsCounter = 0;
 unsigned long swapsCounter = 0;
 
-bool cmp1(int a, int b) {
+bool greater(int a, int b) {
     comparisonsCounter++;
 
     return a > b;
 }
 
-bool cmp2(int a, int b) {
+bool smallerEqual(int a, int b) {
     comparisonsCounter++;
 
     return a <= b;
+}
+
+bool equal(int a, int b) {
+    comparisonsCounter++;
+
+    return a == b;
 }
 
 void swp(int& a, int& b) {
@@ -41,7 +47,7 @@ void insertionSort(std::vector<int>& array, size_t left, size_t right) {
         int key = array[i] ;
         size_t j = i;
 
-        while(j > left && cmp1(array[j-1], key)) {
+        while(j > left && greater(array[j-1], key)) {
             assign(array[j], array[j-1]);
             j--;
         }
@@ -52,7 +58,7 @@ void insertionSort(std::vector<int>& array, size_t left, size_t right) {
 size_t select_partition(std::vector<int>& array, size_t left, size_t right, int pivot) {
     size_t pivot_index;
     for(pivot_index = left; pivot_index < right; pivot_index++) {
-        if(array[pivot_index] == pivot) {
+        if(equal(array[pivot_index], pivot)) {
             break;
         }
     }
@@ -60,7 +66,7 @@ size_t select_partition(std::vector<int>& array, size_t left, size_t right, int 
 
     int i = left - 1;
     for (int j = left; j <= right - 1; j++) {
-        if (cmp2(array[j], pivot)) {
+        if (smallerEqual(array[j], pivot)) {
             i++;
             swp(array[i], array[j]);
         }
@@ -151,7 +157,11 @@ int main(int argc, char** argv) {
     
 #endif  // EXTENSIVE_OUTPUT
 
+    auto start = std::chrono::steady_clock::now();
     int result = select(array, k, m, 0, n-1);
+    auto end = std::chrono::steady_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
     
 #ifdef EXTENSIVE_OUTPUT
 
@@ -172,11 +182,12 @@ int main(int argc, char** argv) {
     std::cout << "\nk-th smallest element = " << result << '\n' <<
         "is correct: " << (array[k - 1] == result) << '\n' <<
         "cmps: " << comparisonsCounter << '\n' <<
-        "swps: " << swapsCounter << '\n';
+        "swps: " << swapsCounter << '\n' <<
+        "time: " << elapsed_seconds.count() * 1000 << '\n';
 #else
 
     std::sort(array.begin(), array.end(), std::less<int>());
-    std::cout << (array[k - 1] == result) << " " << comparisonsCounter << " " << swapsCounter << '\n';
+    std::cout << (array[k - 1] == result) << " " << comparisonsCounter << " " << swapsCounter << " " << elapsed_seconds.count() * 1000 << '\n';
 
 #endif  // EXTENSIVE_OUTPUT 
 

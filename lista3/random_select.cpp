@@ -20,7 +20,7 @@ size_t get_rand_int(size_t min_val, size_t max_val) {
 }
 
 
-bool cmp(int a, int b) {
+bool smallerEqual(int a, int b) {
     comparisonsCounter++;
 
     return a <= b;
@@ -41,7 +41,7 @@ size_t random_select_partition(std::vector<int>& array, size_t left, size_t righ
     int i = left - 1;
  
     for (int j = left; j <= right - 1; j++) {
-        if (cmp(array[j], pivot)) {
+        if (smallerEqual(array[j], pivot)) {
             i++;
             swp(array[i], array[j]);
         }
@@ -112,8 +112,12 @@ int main(int argc, char** argv) {
     std::cout << '\n';
     
 #endif  // EXTENSIVE_OUTPUT
-
+    
+    auto start = std::chrono::steady_clock::now();
     int result = random_select(array, k, 0, n-1);
+    auto end = std::chrono::steady_clock::now();
+
+    std::chrono::duration<double> elapsed_seconds = end-start;
 
 #ifdef EXTENSIVE_OUTPUT
 
@@ -134,11 +138,12 @@ int main(int argc, char** argv) {
     std::cout << "\nk-th smallest element = " << result << '\n' <<
         "is correct: " << (array[k - 1] == result) << '\n' <<
         "cmps: " << comparisonsCounter << '\n' <<
-        "swps: " << swapsCounter << '\n';
+        "swps: " << swapsCounter << '\n' <<
+        "time: " << elapsed_seconds.count() * 1000 << '\n';
 #else
 
     std::sort(array.begin(), array.end(), std::less<int>());
-    std::cout << (array[k - 1] == result) << " " << comparisonsCounter << " " << swapsCounter << '\n';
+    std::cout << (array[k - 1] == result) << " " << comparisonsCounter << " " << swapsCounter << " " << elapsed_seconds.count() * 1000 << '\n';
 
 #endif  // EXTENSIVE_OUTPUT 
 

@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 
-#undef EXTENSIVE_OUTPUT
+#define EXTENSIVE_OUTPUT
 
 unsigned long comparisonsCounter = 0;
 
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
         std::cout << " not exist\n";
     }
 
-    "time: " << elapsed_seconds.count() * 1000 << '\n';
+    std::cout << "time: " << elapsed_seconds.count() * 1000 << '\n';
     
 #else
 

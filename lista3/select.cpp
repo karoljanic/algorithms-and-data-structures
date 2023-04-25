@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 
-#undef EXTENSIVE_OUTPUT
+#define EXTENSIVE_OUTPUT
 
 unsigned long comparisonsCounter = 0;
 unsigned long swapsCounter = 0;

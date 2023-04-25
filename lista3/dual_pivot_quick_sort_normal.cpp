@@ -3,7 +3,7 @@
 #include <vector>
 #include <chrono>
 
-#define EXTENSIVE_OUTPUT
+#undef EXTENSIVE_OUTPUT
 
 unsigned long comparisonsCounter = 0;
 unsigned long swapsCounter = 0;

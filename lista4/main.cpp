@@ -7,7 +7,7 @@
 #include "RBTree.hpp"
 #include "SplayTree.hpp"
 
-#define EXTENSIVE_OUTPUT
+#undef EXTENSIVE_OUTPUT
 
 std::random_device rd;
 std::mt19937 gen(rd());
@@ -155,10 +155,10 @@ int main(int argc, char* argv[]) {
     std::string outputFileString = std::string(argv[1]) + "_" + std::string(argv[2]) + ".txt";
     std::ofstream outputFile{outputFileString};
 
-    //testDataStructure(tree, range, insertionsOrder, deletionsOrder, outputFile);
-
     for(size_t i = 10000; i <= 100000; i+= 10000) {
         insertionsOrder.resize(i);
+
+        std::cout << i;
         if(dataType == "rand")
             randomVector(insertionsOrder, i);
         else if(dataType == "asc")
@@ -171,8 +171,9 @@ int main(int argc, char* argv[]) {
             return -3;
         }
 
-        std::cout << i << std::endl;
         testDataStructure(tree, i, insertionsOrder, deletionsOrder, outputFile);
+
+        std::cout << " done!\n";
     }
 
 #endif // EXTENSIVE_OUTPUT

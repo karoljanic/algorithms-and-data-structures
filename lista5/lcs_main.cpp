@@ -85,11 +85,12 @@ int main(int argc, char* argv[]) {
 
         file.close();
     }
-    else if(argc == 3) {
-        std::string str1{argv[1]};
-        std::string str2{argv[2]};
+    else if(argc == 2) {
+        size_t n{static_cast<size_t>(std::stoi(argv[1]))};
+        std::string str1{randomString(n)};
+        std::string str2{randomString(n)};
 
-        std::cout << longestCommonSubsequence(str1, str2) << std::endl;
+        std::cout << str1 << std::endl << str2 << std::endl << longestCommonSubsequence(str1, str2) << std::endl;
     }
 
     return 0;

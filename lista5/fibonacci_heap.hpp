@@ -75,8 +75,8 @@ private:
             return node;
         }  
 
-        constexpr size_t maxChildDegree = 1024;
-        std::vector<std::shared_ptr<FNode<T>>> trees(1024, nullptr);
+        constexpr size_t maxChildDegree = 32;
+        std::vector<std::shared_ptr<FNode<T>>> trees(maxChildDegree, nullptr);
         
         while(true) {
             if(trees[node->degree] != nullptr) {
